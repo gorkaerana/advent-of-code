@@ -2,8 +2,7 @@ using Pipe: @pipe
 using CSV
 using DataFrames
 
-input_dir = dirname(@__FILE__)
-directions = @pipe input_dir * "/input/day2.txt" |>
+directions = @pipe joinpath(dirname(@__FILE__), "input", "day02.txt") |>
     CSV.read(_, DataFrame, delim=' ', header=false) |>
     rename!(_, :Column1 => :direction, :Column2 => :quantity)
 directions[directions.direction.=="up", :quantity] *= -1

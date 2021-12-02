@@ -1,3 +1,4 @@
+using Pipe: @pipe
 
 function read_file_content(path::String)
     lines = []
@@ -9,11 +10,9 @@ function read_file_content(path::String)
     return lines
 end
 
-input_dir = dirname(@__FILE__) * "/input"
-depths = map(
-    x -> parse(Int64, x),
-    read_file_content(input_dir * "/day1.txt")
-)
+depths = @pipe joinpath(dirname(@__FILE__), "input", "day01.txt") |>
+    read_file_content(_) |>
+    parse.(Int64, _)
 
 # Part 1
 n_larger_measurement = sum([t[2]-t[1]>=0 for t in zip(depths, depths[2:end])])
