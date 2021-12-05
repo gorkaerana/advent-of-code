@@ -16,15 +16,12 @@ function euclidean_distance(x1, y1, x2, y2)
     sqrt((x2 - x1)^2 + (y2 - y1)^2)
 end
 
-function point_sin(x1, y1, x2, y2)
-    (x2 - x1) / euclidean_distance(x1, y1, x2, y2)
-end
-
 function is_diagonal_line(x1, y1, x2, y2)
-    if isapprox(euclidean_distance(x1, y1, x2, y2), 0)
+    ed = euclidean_distance(x1, y1, x2, y2)
+    if isapprox(ed, 0)
         return true
     end
-    ps = abs(point_sin(x1, y1, x2, y2))
+    ps = abs((x2 - x1) / ed)
     return isapprox(ps, sin(pi/4))
 end
 
@@ -54,5 +51,5 @@ for row in input_data
     end
 end
 
-@show sum(val > 1 for val in values(heatmap1))
-@show sum(val > 1 for val in values(heatmap2))
+println("Part 1: the number of points where at least two vertical or horizontal lines overlap is $(sum(val > 1 for val in values(heatmap1))).")
+println("Part 2: the number of points where at least two vertical, horizontal or diagonal lines overlap is $(sum(val > 1 for val in values(heatmap2))).")
