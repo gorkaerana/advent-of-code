@@ -1,4 +1,5 @@
 using Pipe: @pipe
+using Statistics: median
 
 delimiters = Dict(
     '(' => ')',
@@ -70,6 +71,6 @@ end
     map(p -> p[2], _) |>
     join.(_, "") |>
     autocomplete_score.(_) |>
-    sort(_) |>
-    _[trunc(Int, ceil(length(_) / 2))] |>
+    median(_) |>
+    Int(_) |>
     print("Part 2: ", _, "\n")
