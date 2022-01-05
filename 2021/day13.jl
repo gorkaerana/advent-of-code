@@ -65,6 +65,16 @@ function fold(paper, axis, index)
     new_paper
 end
 
+function beautiful_display(boolean_matrix)
+    nrows, ncols = size(boolean_matrix)
+    for i = 1:nrows
+        @pipe boolean_matrix[i, :] |>
+            [_[j] == 1 ? "#" : "." for j = 1:ncols] |>
+            join(_, "") |>
+            print(_, "\n")
+    end
+end
+
 let
     paper, instructions = @pipe joinpath(@__DIR__, "input", "day13.txt") |>
         process_input(_)
@@ -77,6 +87,5 @@ let
         end
     end
     print("Part 2:\n")
-    display(paper)
-    print("\n")
+    beautiful_display(paper)
 end
