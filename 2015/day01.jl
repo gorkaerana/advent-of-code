@@ -1,20 +1,11 @@
-using Pipe: @pipe
+include("../utils.jl")
+using .Utils: read_input
 
-function read_input()
-    # TODO: substitute with reading from webpage
-    # Convention: input is in "input/$(filename).txt" where filename = a given
-    # day's file name
-    @pipe splitpath(@__FILE__) |> 
-        last |>
-        split(_, ".") |>
-        first |> 
-        joinpath(@__DIR__, "input", "$(_).txt") |>
-        readlines
-end
+using Pipe: @pipe
 
 translation = Dict('(' => 1, ')' => -1)
 
-translated = @pipe read_input() |>
+translated = @pipe read_input(@__FILE__) |>
     first |>
     collect |>
     map(x -> translation[x], _)
