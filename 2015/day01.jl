@@ -1,7 +1,7 @@
+using Pipe: @pipe
+
 include("../utils.jl")
 using .Utils: read_input
-
-using Pipe: @pipe
 
 translation = Dict('(' => 1, ')' => -1)
 
