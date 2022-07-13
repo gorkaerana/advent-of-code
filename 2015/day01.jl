@@ -14,19 +14,18 @@ end
 
 translation = Dict('(' => 1, ')' => -1)
 
-@pipe read_input() |>
+translated = @pipe read_input() |>
     first |>
     collect |>
-    map(x -> translation[x], _) |>
+    map(x -> translation[x], _)
+
+@pipe translated |>
     sum |>
     print("Part one: ", _, "\n")
 
-@pipe read_input() |>
-    first |>
-    collect |>
-    map(x -> translation[x], _) |>
+@pipe translated |>
     cumsum |>
-    map(x -> x == -1, _) |>
+    .==(_, -1) |>
     findall |>
     first |>
     print("Part two: ", _, "\n")
