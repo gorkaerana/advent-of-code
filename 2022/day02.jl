@@ -54,16 +54,16 @@ function score2(foe_play::SubString, result::SubString)
     outcome_score_map[result] + shape_score_map[choice]
 end
 
-@pipe dirname(@__FILE__) |>
-    join([_, "input", "day02.txt"], '/') |>
+@pipe identity(@__FILE__) |>
+    joinpath(dirname(_), "input", first(splitext(basename(_))) * ".txt") |>
     readlines |>
     split.(_, r" ") |>
     map(t -> score1(t[1], t[2]), _) |>
     sum |>
     println("Part 1: $_")
 
-@pipe dirname(@__FILE__) |>
-    join([_, "input", "day02.txt"], '/') |>
+@pipe identity(@__FILE__) |>
+    joinpath(dirname(_), "input", first(splitext(basename(_))) * ".txt") |>
     readlines |>
     split.(_, r" ") |>
     map(t -> score2(t[1], t[2]), _) |>
