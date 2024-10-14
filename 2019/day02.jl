@@ -3,26 +3,38 @@ OPCODES::Dict{Int, Function} = Dict(
     2 => *
 )
 
-program = parse.(Int, split(first(readlines("./input/day02_small.txt")), ","))
-println("Program: ", program)
-# program[1 + 1] = 12
-# program[2 + 1] = 2
-# println("Program: ", program)
-for i = 1:4:length(program)
-    opcode_index, value1_index, value2_index, output_index = i:(i+3)
-    opcode = program[opcode_index]
-    (opcode == 99) && break
-    opcode_function = get(OPCODES, opcode, nothing)
-    isnothing(opcode_function) && error("Something went wrong at position $opcode_index: opcode has to be either '1', '2', or '99'; got $opcode")
+function run_program(program::Vector{Int64}, noun::Int64, verb::Int64)
+    new_program = copy(program)
+    new_program[1 + 1] = noun
+    new_program[2 + 1] = verb 
+    for i = 1:4:length(new_program)
+        opcode_address, value1_address, value2_address, output_address = i:(i+3)
+        opcode = new_program[opcode_address]
+        (opcode == 99) && break
+        opcode_function = get(OPCODES, opcode, nothing)
+        isnothing(opcode_function) && error("Something went wrong at position $opcode_address: opcode has to be either '1', '2', or '99'; got $opcode")
 
-    # Positions are 0-indexed in the program, and 1-indexed in Julia
-    value1_position = program[value1_index] + 1
-    value2_position = program[value2_index] + 1
-    output_position = program[output_index] + 1
-    value1 = program[value1_position]
-    value2 = program[value2_position]
+        # Positions are 0-indexed in the new_program, whereas Julia is 1-indexed
+        parameter1 = new_program[value1_address] + 1
+        parameter2 = new_program[value2_address] + 1
+        output_parameter = new_program[output_address] + 1
+        value1 = new_program[parameter1]
+        value2 = new_program[parameter2]
 
-    program[output_position] = opcode_function(value1, value2)
-    println(program)
-    println("---")
+        new_program[output_parameter] = opcode_function(value1, value2)
+    end
+    new_program[1]
 end
+
+function iterate_solution_space(program::Vector{Int64}, target::Int64)
+    max_value = length(program) - 1
+    for noun = 1:max_value, verb = 1:max_value
+        run_program(program, noun, verb) == target && return (100 * noun) + verb
+    end
+    error("Uh oh, did not find solution")
+end
+
+
+program = parse.(Int, split(first(readlines("./input/day02.txt")), ","))
+println("Part 1: $(run_program(program, 12, 2))")
+println("Part 2: $(iterate_solution_space(program, 19690720))")
