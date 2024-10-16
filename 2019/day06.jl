@@ -15,8 +15,8 @@ function dijkstra(graph::Graph{T}, source::T) where {T}
     end
     distances[source] = 0
 
-    current_node = source
-    while true 
+    while !isempty(q)
+        current_node = argmin(x -> distances[x], keys(q))
         pop!(q, current_node)
         neighbours = get(graph.edges, current_node, [])
         for neighbour in neighbours
@@ -26,8 +26,6 @@ function dijkstra(graph::Graph{T}, source::T) where {T}
                 previous[neighbour] = current_node
             end
         end
-        isempty(q) && break
-        current_node = argmin(x -> distances[x], keys(q))
     end
     return distances, previous
 end
