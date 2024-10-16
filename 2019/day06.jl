@@ -18,8 +18,7 @@ function dijkstra(graph::Graph{T}, source::T) where {T}
     while !isempty(q)
         current_node = argmin(x -> distances[x], keys(q))
         pop!(q, current_node)
-        neighbours = get(graph.edges, current_node, [])
-        for neighbour in neighbours
+        for neighbour in get(graph.edges, current_node, [])
             alt = distances[current_node] + graph.weights[(current_node, neighbour)]
             if alt < distances[neighbour]
                 distances[neighbour] = alt
@@ -49,7 +48,7 @@ function make_orbit_graph(filename::String, bidirectional::Bool)::OrbitGraph
             !bidirectional && break
         end
     end
-    Graph(Set(nodes), edges, weights)
+    Graph{String}(Set(nodes), edges, weights)
 end
 
 function count_orbits(orbit_graph::OrbitGraph, planet::String, accumulator::Int64 = 0)::Int64
