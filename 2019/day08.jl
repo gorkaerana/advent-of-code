@@ -5,7 +5,7 @@ function gather_image(image_data::String, width::Int64, height::Int64)::Array{Ch
     )
 end
 
-function top_visible_pixel(input::Vector{Char})# ::Char
+function top_visible_pixel(input::Vector{Char})::Char
     first_black = findfirst(==('0'), input)
     first_white = findfirst(==('1'), input)
     isnothing(first_black) && isnothing(first_white) && return '2'
@@ -18,7 +18,7 @@ end
 image_data = first(readlines("./input/day08.txt"))
 image = gather_image(image_data, 25, 6)
 
-z = argmin(reshape(sum(image .== '0', dims=(1, 2)), :))  # Layer with fewest zeros
+z = argmin(dropdims(sum(image .== '0', dims=(1, 2)), dims=(1, 2)))  # Layer with fewest zeros
 output1 = sum(image[:, :, z] .== '1') * sum(image[:, :, z] .== '2')
 println("Part 1: $output1")
 
