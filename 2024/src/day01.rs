@@ -25,6 +25,7 @@ pub fn main() {
     }
     lefts.sort();
     rights.sort();
+    println!("{}", "Day 1".to_owned());
     println!("Part 1: {}", lefts.iter().zip(rights.clone()).map(|(l, r)| (l - r).abs()).sum::<i32>());
 
     let mut right_counts = HashMap::<i32, i32>::new();
