@@ -29,7 +29,9 @@ fn problem_dampener(report: Report) -> bool {
 	.enumerate()
 	.any(
 	    |(index, _value)| {
-		let dampened: Report = report.iter().cloned()
+		let dampened: Report = report
+		    .iter()
+		    .cloned()
 		    .enumerate()
 		    .filter(|(i, _v)| { *i != index })
 		    .map(|(_i, v)| { v })
