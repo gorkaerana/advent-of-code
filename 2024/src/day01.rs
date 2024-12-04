@@ -5,7 +5,7 @@ use std::io::{BufRead, BufReader};
 
 pub fn main() {
     let input_path = env::current_dir()
-        .expect("Could not get current directory")
+	.unwrap()
         .join("input")
         .join("day01.txt");
     let file = File::open(input_path);
@@ -17,8 +17,8 @@ pub fn main() {
         match line {
             Ok(content) => {
                 let parts: Vec<&str> = content.split("   ").collect();
-                lefts.push(parts[0].parse::<i32>().expect("Failure"));
-                rights.push(parts[1].parse::<i32>().expect("Failure"));
+                lefts.push(parts[0].parse::<i32>().unwrap());
+                rights.push(parts[1].parse::<i32>().unwrap());
             }
             Err(error) => eprintln!("Failure: {}", error),
         }

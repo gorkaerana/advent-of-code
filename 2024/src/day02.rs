@@ -33,7 +33,7 @@ fn problem_dampener(report: Report) -> bool {
 
 pub fn main() {
     let input_path = env::current_dir()
-        .expect("Could not get current directory")
+	.unwrap()
         .join("input")
         .join("day02.txt");
     let file = File::open(input_path);
@@ -45,7 +45,7 @@ pub fn main() {
             Ok(content) => {
                 let report: Vec<Level> = content
                     .split(" ")
-                    .map(|e| { e.parse::<i32>() }.expect("Failure"))
+                    .map(|e| { e.parse::<i32>() }.unwrap())
                     .collect();
                 reports.push(report)
             }
