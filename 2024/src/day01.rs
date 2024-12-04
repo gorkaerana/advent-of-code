@@ -4,10 +4,7 @@ use std::fs::File;
 use std::io::{BufRead, BufReader};
 
 pub fn main() {
-    let input_path = env::current_dir()
-	.unwrap()
-        .join("input")
-        .join("day01.txt");
+    let input_path = env::current_dir().unwrap().join("input").join("day01.txt");
     let file = File::open(input_path);
     let reader = BufReader::new(file.unwrap());
 

@@ -23,9 +23,7 @@ fn count_word_occurrences(word_search: WordSearch, word: String) -> i32 {
                 .collect::<Vec<_>>()
                 .join("");
 
-            if (v == word) || (reverse(v) == word) {
-                n_occurrences += 1;
-            }
+            n_occurrences += ((v == word) || (reverse(v) == word)) as i32;
         }
     }
     // Vertical matches
@@ -35,9 +33,7 @@ fn count_word_occurrences(word_search: WordSearch, word: String) -> i32 {
                 .map(|i| word_search[row_no + i][col_no].to_string())
                 .collect::<Vec<_>>()
                 .join("");
-            if (v == word) || (reverse(v) == word) {
-                n_occurrences += 1;
-            }
+            n_occurrences += ((v == word) || (reverse(v) == word)) as i32;
         }
     }
     // Left-to-right diagonal matches
@@ -47,9 +43,7 @@ fn count_word_occurrences(word_search: WordSearch, word: String) -> i32 {
                 .map(|i| word_search[row_no + i][col_no + i].to_string())
                 .collect::<Vec<_>>()
                 .join("");
-            if (v == word) || (reverse(v) == word) {
-                n_occurrences += 1;
-            }
+            n_occurrences += ((v == word) || (reverse(v) == word)) as i32;
         }
     }
     // Right-to-left diagonal matches
@@ -59,9 +53,7 @@ fn count_word_occurrences(word_search: WordSearch, word: String) -> i32 {
                 .map(|i| word_search[row_no + i][col_no - i].to_string())
                 .collect::<Vec<_>>()
                 .join("");
-            if (v == word) || (reverse(v) == word) {
-                n_occurrences += 1;
-            }
+            n_occurrences += ((v == word) || (reverse(v) == word)) as i32;
         }
     }
     n_occurrences
@@ -87,13 +79,11 @@ fn count_word_crosses(word_search: WordSearch, word: String) -> i32 {
                 .map(|i| square[i][word.len() - i - 1].to_string())
                 .collect::<Vec<String>>()
                 .join("");
-            if ((diag1.clone() == word) && (diag2.clone() == word))
+            n_occurrences += (((diag1.clone() == word) && (diag2.clone() == word))
                 || ((reverse(diag1.clone()) == word) && (diag2.clone() == word))
                 || ((diag1.clone() == word) && (reverse(diag2.clone()) == word))
-                || ((reverse(diag1.clone()) == word) && (reverse(diag2.clone()) == word))
-            {
-                n_occurrences += 1;
-            }
+                || ((reverse(diag1.clone()) == word) && (reverse(diag2.clone()) == word)))
+                as i32;
         }
     }
     n_occurrences

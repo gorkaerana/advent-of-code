@@ -6,22 +6,12 @@ use regex::{Captures, Regex};
 fn extract_capture_groups<'a>(captures: Captures<'a>, names: Vec<&'a str>) -> Vec<i32> {
     names
         .iter()
-        .map(|n| {
-            captures
-                .name(n)
-		.unwrap()
-                .as_str()
-                .parse::<i32>()
-		.unwrap()
-        })
+        .map(|n| captures.name(n).unwrap().as_str().parse::<i32>().unwrap())
         .collect::<Vec<i32>>()
 }
 
 pub fn main() {
-    let input_path = env::current_dir()
-	.unwrap()
-        .join("input")
-        .join("day03.txt");
+    let input_path = env::current_dir().unwrap().join("input").join("day03.txt");
     let input = fs::read_to_string(input_path).unwrap();
     let part1_pattern = Regex::new(r"mul\((?<left>\d{1,3}),(?<right>\d{1,3})\)").unwrap();
     let part1_result: i32 = part1_pattern

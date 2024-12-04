@@ -32,10 +32,7 @@ fn problem_dampener(report: Report) -> bool {
 }
 
 pub fn main() {
-    let input_path = env::current_dir()
-	.unwrap()
-        .join("input")
-        .join("day02.txt");
+    let input_path = env::current_dir().unwrap().join("input").join("day02.txt");
     let file = File::open(input_path);
     let reader = BufReader::new(file.unwrap());
 
